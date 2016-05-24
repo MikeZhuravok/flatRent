@@ -33,5 +33,7 @@ namespace FlatRent.Web.Models
         public System.Data.Entity.DbSet<FlatRent.Entities.Facility> Facilities { get; set; }
 
         public System.Data.Entity.DbSet<FlatRent.Entities.Picture> Pictures { get; set; }
+
+        public System.Data.Entity.DbSet<FlatRent.Entities.Flat> Flats { get; set; }
     }
 }

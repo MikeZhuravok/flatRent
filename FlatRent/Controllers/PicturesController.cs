@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlatRent.Entities;
@@ -38,67 +34,54 @@ namespace FlatRent.Controllers
             return Ok(picture);
         }
 
-        // PUT: api/Pictures/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPicture(int id, Picture picture)
+        //[ResponseType(typeof(Picture))]
+        //public IHttpActionResult PostPicture(/*[FromBody]string name,*/ HttpPostedFileBase uploadImage)
+        //{
+
+        //    Picture picture = new Picture()
+        //    {
+        //        Name = /*name*/"random name"
+        //    };
+        //    if (!ModelState.IsValid)
+        //    {
+        //        byte[] imageData = null;
+        //        using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+        //        {
+        //            imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+        //        }
+        //        picture.Image = imageData;
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.Pictures.Add(picture);
+        //    db.SaveChanges();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = picture.ID }, picture);
+        //}
+
+        public IHttpActionResult PostPicture(/*[FromBody]string name,*/ HttpPostedFileBase uploadImage)
         {
-            if (!ModelState.IsValid)
+            if (uploadImage != null)
             {
-                return BadRequest(ModelState);
-            }
+                string pic = System.IO.Path.GetFileName(uploadImage.FileName);
+                string path = System.IO.Path.Combine(
+                                       System.Web.HttpContext.Current.Server.MapPath("~/images/profile"), pic);
+                // file is uploaded
+                uploadImage.SaveAs(path);
 
-            if (id != picture.ID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(picture).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PictureExists(id))
+                // save the image path path to the database or you can send image 
+                // directly to database
+                // in-case if you want to store byte[] ie. for DB
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    uploadImage.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return CreatedAtRoute("DefaultApi", new { id = 1 }, new Picture { ID = 1});
         }
-
-        // POST: api/Pictures
-        [ResponseType(typeof(Picture))]
-        public IHttpActionResult PostPicture([FromBody]string name, HttpPostedFileBase uploadImage)
-        {
-
-            Picture picture = new Picture()
-            {
-                Name = name
-            };
-            if (!ModelState.IsValid)
-            {
-                byte[] imageData = null;
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                {
-                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                }
-                picture.Image = imageData;
-                return BadRequest(ModelState);
-            }
-
-            db.Pictures.Add(picture);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = picture.ID }, picture);
-        }
-
+       
         // DELETE: api/Pictures/5
         [ResponseType(typeof(Picture))]
         public IHttpActionResult DeletePicture(int id)

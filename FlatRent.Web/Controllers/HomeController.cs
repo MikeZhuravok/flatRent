@@ -11,16 +11,20 @@ namespace FlatRent.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public async System.Threading.Tasks.Task<ActionResult> Index()
         {
-            return View();
-        }
+            IEnumerable<Flat> model;
+            using (var client = new HttpClient())
+            {
+                var uri = new Uri(StaticData.ApiLink + "api/Flats");
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+                var response = await client.GetAsync(uri);
 
-            return View();
+                string textResult = await response.Content.ReadAsStringAsync();
+
+                model = System.Web.Helpers.Json.Decode<IEnumerable<Flat>>(textResult);
+            }
+            return View(model);
         }
 
         public ActionResult Contact()
