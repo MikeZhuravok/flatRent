@@ -9,6 +9,8 @@ namespace FlatRent.Entities
     public class Picture : Entity
     {
         public string Name { get; set; }
-        public byte[] Image { get; set; }
+        public string LinkToImage { get; set; }
+
+        public virtual Flat Flat { set; get; }
     }
 }

@@ -8,6 +8,7 @@ using FlatRent.Entities;
 using FlatRent.Models;
 using System.Web;
 using System.IO;
+using System.Collections.Generic;
 
 namespace FlatRent.Controllers
 {
@@ -32,7 +33,7 @@ namespace FlatRent.Controllers
             return Ok(picture);
         }
 
-        public IHttpActionResult PostPicture()
+        public IHttpActionResult PostPicture(int id)
         {
             if (HttpContext.Current.Request.Files.AllKeys.Any())
             {
@@ -43,7 +44,19 @@ namespace FlatRent.Controllers
                     var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), httpPostedFile.FileName);
 
                     httpPostedFile.SaveAs(fileSavePath);
+
+                    //Stream stream = httpPostedFile.InputStream;  infinite process to make that
+
+                    //byte[] imageData = new byte[524288]; // 4mb = 4 000 000; 0.5 mb = 524288
+                    //while (stream.Read(imageData, 0, 524288) != -1)
+                    //{
+                    //    ;
+                    //}
+                    //byte i = imageData[0];
+
+                    Picture pic = new Picture();
                 }
+
             }
 
             return CreatedAtRoute("DefaultApi", new { id = 1 }, new Picture { ID = 1});

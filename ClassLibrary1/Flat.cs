@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FlatRent.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,5 +24,8 @@ namespace FlatRent.Entities
         public double Longitude; //долгота
 
         public int OwnerId { set; get; }
+        public List<Picture> Pictures { set; get; }
+
+        public virtual ApplicationUser ApplicationUser { set; get; }
     }
 }
