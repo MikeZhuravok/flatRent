@@ -40,6 +40,7 @@ namespace FlatRent.Web.Controllers
 
             return View();
         }
+
         public async System.Threading.Tasks.Task<ActionResult> GetPictures()
         {
             ViewBag.Message = "Get pictures from DB.";

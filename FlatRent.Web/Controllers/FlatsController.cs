@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FlatRent.Entities;
-using FlatRent.Web.Models;
 using System.Net.Http;
 using FlatRent.Web.App_Start;
 
@@ -15,7 +14,6 @@ namespace FlatRent.Web.Controllers
 {
     public class FlatsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         public async System.Threading.Tasks.Task<ActionResult> Index()
         {

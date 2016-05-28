@@ -19,7 +19,7 @@ using FlatRent.Results;
 
 namespace FlatRent.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

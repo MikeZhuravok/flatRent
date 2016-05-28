@@ -1,63 +1,49 @@
-﻿@using FlatRent.Web.Models
-@model LoginViewModel
-@{
-    ViewBag.Title = "Выполнить вход";
-}
-
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Используйте локальную учетную запись для входа.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Выполнить вход" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Регистрация нового пользователя", "Register")
-                </p>
-                @* Включите, когда будет включено подтверждение учетной записи для функции сброса пароля
-                    <p>
-                        @Html.ActionLink("Забыли пароль?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+﻿<div class="userInfo" style="display:none;">
+    <p>Вы вошли как: <span class="userName"></span></p>
+    <input type="button" value="Выйти" id="logOut" />
 </div>
+<div class="loginForm">
+    <h3>Вход на сайт</h3>
+    <label>Введите email</label><br />
+    <input type="email" id="emailLogin" /> <br /><br />
+    <label>Введите пароль</label><br />
+    <input type="password" id="passwordLogin" /><br /><br />
+    <input type="submit" id="submitLogin" value="Логин" />
+</div>
+@section scripts{
+    <script type="text/javascript">
+    $(function () {
+        //...........................
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+        var tokenKey = "tokenInfo";
+        $('#submitLogin').click(function (e) {
+            e.preventDefault();
+            var loginData = {
+                grant_type: 'password',
+                username: $('#emailLogin').val(),
+                password: $('#passwordLogin').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:57401/Token',
+                data: loginData
+            }).success(function (data) {
+                $('.userName').text(data.userName);
+                $('.userInfo').css('display', 'block');
+                $('.loginForm').css('display', 'none');
+                // сохраняем в хранилище sessionStorage токен доступа
+                sessionStorage.setItem(tokenKey, data.access_token);
+                console.log(data.access_token);
+            }).fail(function (data) {
+                alert('При логине возникла ошибка');
+            });
+        });
+
+        $('#logOut').click(function (e) {
+            e.preventDefault();
+            sessionStorage.removeItem(tokenKey);           
+        });
+    })
+    </script>
 }

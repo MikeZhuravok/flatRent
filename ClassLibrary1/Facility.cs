@@ -9,6 +9,6 @@ namespace FlatRent.Entities
     {
         public string Type { get; set; }
         public string Description { set; get; }
-        //Kitchen, Bathroom, WiFi, TV, Hairdryer, Iron, Fridge, Microwave, Kettle, Dishes, Linens
+       
     }
 }
