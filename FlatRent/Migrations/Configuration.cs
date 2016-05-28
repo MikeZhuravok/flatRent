@@ -16,7 +16,6 @@ namespace FlatRent.Migrations
 
         protected override void Seed(FlatRent.Models.ApplicationDbContext context)
         {
-            //Kitchen, Bathroom, WiFi, TV, Hairdryer, Iron, Fridge, Microwave, Kettle, Dishes, Linens
             context.Facilities.AddOrUpdate(
               p => p.Type,
               new Facility { Type = "Kitchen", Description = "Special room to cook" },
@@ -31,7 +30,29 @@ namespace FlatRent.Migrations
               new Facility { Type = "Dishes", Description = "There are some dishes, so you dont have to buy one-time dish to eat" },
               new Facility { Type = "Linens", Description = "There are linens, so you can be sure about hygiene while sleeping in flat's bad" }
               );
-
+            context.Flats.AddOrUpdate(
+              p => p.ID,
+              new Flat()
+              {
+                  ID = 1,
+                  Description = "Little flat for families with minimum count of facilities, but is near to the center of tourism",
+                  Address = "Deribasivs'ka, 7",
+                  Country = "Ukraine",
+                  City = "Odessa",
+                  RoomNumber = 1,
+                  PriceForDay = 600,
+                  PriceForMonth = 18000,
+                  Longitude = 55.752308,
+                  Latitude = 37.610489,
+                  Facilities = new System.Collections.Generic.List<Facility>() { context.Facilities.FirstOrDefault(p => p.Type == "Bathroom"),
+                  context.Facilities.FirstOrDefault(p => p.Type == "WiFi"),
+                  context.Facilities.FirstOrDefault(p => p.Type == "Linens"),
+                  context.Facilities.FirstOrDefault(p => p.Type == "Hairdryer"),
+                  context.Facilities.FirstOrDefault(p => p.Type == "TV"),
+                  context.Facilities.FirstOrDefault(p => p.Type == "Kitchen"),
+                  }
+              }
+            );
         }
     }
 }

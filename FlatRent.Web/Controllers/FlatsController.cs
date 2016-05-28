@@ -41,7 +41,7 @@ namespace FlatRent.Web.Controllers
             Flat flat;
             using (var client = new HttpClient())
             {
-                var uri = new Uri(StaticData.ApiLink + "api/Pictures");
+                var uri = new Uri(StaticData.ApiLink + "api/Flats" + id);
 
                 var response = await client.GetAsync(uri);
 
@@ -57,39 +57,49 @@ namespace FlatRent.Web.Controllers
             return View();
         }
 
-        //    // GET: Flats/Edit/5
-        //    public ActionResult Edit(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //        Flat flat = db.Flats.Find(id);
-        //        if (flat == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-        //        return View(flat);
-        //    }      
+        public async System.Threading.Tasks.Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Flat flat;
+            using (var client = new HttpClient())
+            {
+                var uri = new Uri(StaticData.ApiLink + "api/Flats" + id);
 
-        //public async System.Threading.Tasks.Task<ActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    using (var client = new HttpClient())
-        //    {
-        //        var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
+                var response = await client.GetAsync(uri);
 
-        //        var response = await client.GetAsync(uri);
+                string textResult = await response.Content.ReadAsStringAsync();
 
-        //        string textResult = await response.Content.ReadAsStringAsync();
+                flat = System.Web.Helpers.Json.Decode<Flat>(textResult);
+            }
+            if (flat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(flat);
+        }
 
-        //        //model = System.Web.Helpers.Json.Decode<IEnumerable<Flat>>(textResult);
-        //    }
-        //    //return View(model);
-        //}
-        
+        public async System.Threading.Tasks.Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Flat flat; 
+            using (var client = new HttpClient())
+            {
+                var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
+
+                var response = await client.GetAsync(uri);
+
+                string textResult = await response.Content.ReadAsStringAsync();
+
+                flat = System.Web.Helpers.Json.Decode<Flat>(textResult);
+            }
+            return View(flat);
+        }
+
     }
 }

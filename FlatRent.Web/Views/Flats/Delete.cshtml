@@ -12,14 +12,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.RoomNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RoomNumber)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Country)
         </dt>
 
@@ -44,14 +36,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.District)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.District)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
@@ -59,38 +43,15 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceForDay)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceForDay)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceForMonth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceForMonth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnerId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OwnerId)
-        </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    <form method="delete" action="http://localhost:57401/api/Flats/@Model.ID" role="form" class="form-horizontal">
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
-    }
+    </form>
 </div>

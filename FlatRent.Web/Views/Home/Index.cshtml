@@ -16,7 +16,9 @@
             <h4><strong>Price for day:</strong> @i.PriceForDay</h4>
             <h5><strong>Price for month:</strong> @i.PriceForMonth</h5>
             <p>@i.Description</p>
-            @*<p><a class="btn btn-default" href="@Html.Action( "Details", "Flats", new { ID = i.ID })">Learn more &raquo;</a></p>*@
+            <p>
+                @Html.ActionLink("Details", "Details", "Flats", new { ID = i.ID }, new { @class = "btn btn-default" })
+            </p>
         </div>
     }
 </div>

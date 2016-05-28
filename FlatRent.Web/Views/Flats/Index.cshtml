@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Flat's list</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add a rentable flat", "Create")
 </p>
 <table class="table">
     <tr>
@@ -24,21 +24,8 @@
             @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.District)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceForDay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceForMonth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OwnerId)
-        </th>
-        <th></th>
+        </th>       
     </tr>
 
 @foreach (var item in Model) {
@@ -56,19 +43,7 @@
             @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.District)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceForDay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceForMonth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OwnerId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
