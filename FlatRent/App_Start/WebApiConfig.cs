@@ -12,12 +12,11 @@ namespace FlatRent
     {
         public static void Register(HttpConfiguration config)
         {
-            // Конфигурация и службы Web API
-            // Настройка Web API для использования только проверки подлинности посредством маркера-носителя.
+            config.EnableCors();
+
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            // Маршруты Web API
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

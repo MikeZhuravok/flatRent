@@ -14,18 +14,17 @@ namespace FlatRent.Entities
         public string Address { set; get; }
         public string District { set; get; }
         public string Description { set; get; }
-        public List<Facility> Facilities { set; get; }
         [Display(Name = "Price for day")]
         public decimal PriceForDay { set; get; }
         [Display(Name = "Price for month")]
-        public decimal PriceForMonth { set; get; }
-        
-        public double Latitude; //широта
-        public double Longitude; //долгота
+        public decimal PriceForMonth { set; get; }                
+        public double Latitude { set; get; } //широта
+        public double Longitude { set; get; } //долгота
 
         public int OwnerId { set; get; }
-        public List<Picture> Pictures { set; get; }
 
+        public virtual List<Picture> Pictures { set; get; }
+        public virtual List<Facility> Facilities { set; get; }
         public virtual ApplicationUser ApplicationUser { set; get; }
     }
 }

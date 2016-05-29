@@ -42,7 +42,7 @@ namespace FlatRent.Migrations
                   RoomNumber = 1,
                   PriceForDay = 600,
                   PriceForMonth = 18000,
-                  Longitude = 55.752308,
+                  //Longitude = 55.752308,
                   Latitude = 37.610489,
                   Facilities = new System.Collections.Generic.List<Facility>() { context.Facilities.FirstOrDefault(p => p.Type == "Bathroom"),
                   context.Facilities.FirstOrDefault(p => p.Type == "WiFi"),

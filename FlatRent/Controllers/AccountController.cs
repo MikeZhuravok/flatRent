@@ -16,10 +16,12 @@ using Microsoft.Owin.Security.OAuth;
 using FlatRent.Models;
 using FlatRent.Providers;
 using FlatRent.Results;
+using System.Web.Http.Cors;
+using FlatRent.App_Start;
 
 namespace FlatRent.Controllers
 {
-    //[Authorize]
+    [EnableCors(origins: StaticData.WebClientLink, headers: "*", methods: "*")]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
