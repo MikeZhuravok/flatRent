@@ -23,5 +23,6 @@ namespace FlatRent.Models
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Flat> Flats { get; set; }
         public DbSet<Picture> Pictures {get;set;}
+        public DbSet<FacilityInFlat> FacilityInFlats { set; get; }
     }
 }

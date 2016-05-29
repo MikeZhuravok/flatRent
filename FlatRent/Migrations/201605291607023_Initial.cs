@@ -3,7 +3,7 @@ namespace FlatRent.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -14,11 +14,22 @@ namespace FlatRent.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         Type = c.String(),
                         Description = c.String(),
-                        Flat_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.FacilityInFlats",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        FlatId = c.Int(nullable: false),
+                        FacilityId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Flats", t => t.Flat_ID)
-                .Index(t => t.Flat_ID);
+                .ForeignKey("dbo.Facilities", t => t.FacilityId, cascadeDelete: true)
+                .ForeignKey("dbo.Flats", t => t.FlatId, cascadeDelete: true)
+                .Index(t => t.FlatId)
+                .Index(t => t.FacilityId);
             
             CreateTable(
                 "dbo.Flats",
@@ -33,42 +44,14 @@ namespace FlatRent.Migrations
                         Description = c.String(),
                         PriceForDay = c.Decimal(nullable: false, precision: 18, scale: 2),
                         PriceForMonth = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Latitude = c.Double(nullable: false),
+                        Longitude = c.Double(nullable: false),
                         OwnerId = c.Int(nullable: false),
+                        ApplicationUser_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.Pictures",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Image = c.Binary(),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
+                .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -115,29 +98,72 @@ namespace FlatRent.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.Pictures",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        LinkToImage = c.String(),
+                        FlatId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Flats", t => t.FlatId, cascadeDelete: true)
+                .Index(t => t.FlatId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Pictures", "FlatId", "dbo.Flats");
+            DropForeignKey("dbo.FacilityInFlats", "FlatId", "dbo.Flats");
+            DropForeignKey("dbo.Flats", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Facilities", "Flat_ID", "dbo.Flats");
+            DropForeignKey("dbo.FacilityInFlats", "FacilityId", "dbo.Facilities");
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Pictures", new[] { "FlatId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Facilities", new[] { "Flat_ID" });
+            DropIndex("dbo.Flats", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.FacilityInFlats", new[] { "FacilityId" });
+            DropIndex("dbo.FacilityInFlats", new[] { "FlatId" });
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Pictures");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Pictures");
             DropTable("dbo.Flats");
+            DropTable("dbo.FacilityInFlats");
             DropTable("dbo.Facilities");
         }
     }

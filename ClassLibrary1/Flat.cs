@@ -24,7 +24,7 @@ namespace FlatRent.Entities
         public int OwnerId { set; get; }
 
         public virtual List<Picture> Pictures { set; get; }
-        public virtual List<Facility> Facilities { set; get; }
+        public virtual List<FacilityInFlat> Facilities { set; get; }
         public virtual ApplicationUser ApplicationUser { set; get; }
     }
 }

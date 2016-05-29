@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -21,7 +20,7 @@ using FlatRent.App_Start;
 
 namespace FlatRent.Controllers
 {
-    [EnableCors(origins: StaticData.WebClientLink, headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*", exposedHeaders: "X-Custom-Header")]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Entity.cs" />
     <Compile Include="Facility.cs" />
+    <Compile Include="FacilityInFlat.cs" />
     <Compile Include="Flat.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Picture.cs" />

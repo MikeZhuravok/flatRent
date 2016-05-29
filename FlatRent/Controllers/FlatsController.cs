@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlatRent.Entities;
 using FlatRent.Models;
 
 namespace FlatRent.Controllers
-{
+{ 
+
     public class FlatsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

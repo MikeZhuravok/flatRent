@@ -223,21 +223,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605231621231_InitialCreate.cs" />
-    <Compile Include="Migrations\201605231621231_InitialCreate.Designer.cs">
-      <DependentUpon>201605231621231_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605281459421_usersOnlyInApiMigration.cs" />
-    <Compile Include="Migrations\201605281459421_usersOnlyInApiMigration.Designer.cs">
-      <DependentUpon>201605281459421_usersOnlyInApiMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605281729108_LongtitudeAndLatitudeToDB.cs" />
-    <Compile Include="Migrations\201605281729108_LongtitudeAndLatitudeToDB.Designer.cs">
-      <DependentUpon>201605281729108_LongtitudeAndLatitudeToDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605291410113_NormallyTyped.cs" />
-    <Compile Include="Migrations\201605291410113_NormallyTyped.Designer.cs">
-      <DependentUpon>201605291410113_NormallyTyped.cs</DependentUpon>
+    <Compile Include="Migrations\201605291607023_Initial.cs" />
+    <Compile Include="Migrations\201605291607023_Initial.Designer.cs">
+      <DependentUpon>201605291607023_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -322,17 +310,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605231621231_InitialCreate.resx">
-      <DependentUpon>201605231621231_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605281459421_usersOnlyInApiMigration.resx">
-      <DependentUpon>201605281459421_usersOnlyInApiMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605281729108_LongtitudeAndLatitudeToDB.resx">
-      <DependentUpon>201605281729108_LongtitudeAndLatitudeToDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605291410113_NormallyTyped.resx">
-      <DependentUpon>201605291410113_NormallyTyped.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605291607023_Initial.resx">
+      <DependentUpon>201605291607023_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
