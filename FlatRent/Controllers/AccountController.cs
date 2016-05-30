@@ -329,15 +329,27 @@ namespace FlatRent.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName,
+                LastName = model.LastName, PhoneNumber = model.PhoneNumber
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            var cookie = new HttpCookie("test_cookie")
+            {
+                Value = "before getError",
+                Expires = DateTime.Now.AddMinutes(10),
+            };
+            HttpContext.Current.Response.SetCookie(cookie);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
-
+            cookie = new HttpCookie("test_cookie")
+            {
+                Value = "after getError",
+                Expires = DateTime.Now.AddMinutes(10),
+            };
+            HttpContext.Current.Response.SetCookie(cookie);
             return Ok();
         }
 

@@ -1,4 +1,4 @@
-﻿@model FlatRent.Entities.Flat
+﻿@model FlatRent.Web.Models.ViewModels.FlatDetailViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,80 +11,81 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.RoomNumber)
+            @Html.DisplayNameFor(model => model.Flat.RoomNumber)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RoomNumber)
+            @Html.DisplayFor(model => model.Flat.RoomNumber)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Country)
+            @Html.DisplayNameFor(model => model.Flat.Country)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Country)
+            @Html.DisplayFor(model => model.Flat.Country)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.Flat.City)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.City)
+            @Html.DisplayFor(model => model.Flat.City)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.Flat.Address)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Address)
+            @Html.DisplayFor(model => model.Flat.Address)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.District)
+            @Html.DisplayNameFor(model => model.Flat.District)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.District)
+            @Html.DisplayFor(model => model.Flat.District)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            Facilities:
+        </dt>
+        @foreach (var i in Model.Facilities)
+        {
+            <dd>
+                @Html.DisplayFor(model => i.Type)
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Flat.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Flat.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PriceForDay)
+            @Html.DisplayNameFor(model => model.Flat.PriceForDay)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PriceForDay)
+            @Html.DisplayFor(model => model.Flat.PriceForDay)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PriceForMonth)
+            @Html.DisplayNameFor(model => model.Flat.PriceForMonth)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PriceForMonth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnerId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OwnerId)
+            @Html.DisplayFor(model => model.Flat.PriceForMonth)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Flat.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

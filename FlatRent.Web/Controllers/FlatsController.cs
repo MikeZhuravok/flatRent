@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using FlatRent.Entities;
 using System.Net.Http;
 using FlatRent.Web.App_Start;
+using FlatRent.Web.Models.ViewModels;
 
 namespace FlatRent.Web.Controllers
 {
@@ -38,10 +39,11 @@ namespace FlatRent.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            FlatDetailViewModel model = new FlatDetailViewModel();
             Flat flat;
             using (var client = new HttpClient())
             {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats" + id);
+                var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
 
                 var response = await client.GetAsync(uri);
 
@@ -49,7 +51,23 @@ namespace FlatRent.Web.Controllers
 
                 flat = System.Web.Helpers.Json.Decode<Flat>(textResult);
             }
-            return View(flat);
+            List<Facility> facilities;
+            using (var client = new HttpClient())
+            {
+                var uri = new Uri(StaticData.ApiLink + "api/FacilityInFlats/" + id);
+
+                var response = await client.GetAsync(uri);
+
+                string textResult = await response.Content.ReadAsStringAsync();
+
+                facilities = System.Web.Helpers.Json.Decode<List<Facility>>(textResult);
+            }
+
+            model.Flat = flat;
+            model.Facilities = facilities;
+
+
+            return View(model);
         }
 
         public ActionResult Create()
@@ -66,7 +84,7 @@ namespace FlatRent.Web.Controllers
             Flat flat;
             using (var client = new HttpClient())
             {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats" + id);
+                var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
 
                 var response = await client.GetAsync(uri);
 

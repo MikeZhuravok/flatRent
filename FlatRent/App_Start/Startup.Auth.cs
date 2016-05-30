@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using FlatRent.Providers;
 using FlatRent.Models;
+using Microsoft.Owin.Cors;
+using System.Web;
 
 namespace FlatRent
 {
@@ -18,6 +20,9 @@ namespace FlatRent
         // Дополнительные сведения о настройке аутентификации см. по адресу: http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+            //place the above statement as the first one in your owin Startup class. Yes that really makes a difference, setting it later can also cause cors to not work.
+            app.UseCors(CorsOptions.AllowAll);
+
             // Настройка контекста базы данных и диспетчера пользователей для использования одного экземпляра на запрос
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
@@ -27,7 +32,40 @@ namespace FlatRent
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Настройка приложения для потока обработки на основе OAuth
+            ConfigureOAuth(app);
+
+            //app.Use(async (context, next) =>
+            //{
+            //    IOwinRequest req = context.Request;
+            //    IOwinResponse res = context.Response;
+            //    if (req.Path.StartsWithSegments(new PathString("/Token")))
+            //    {
+            //        //var origin = req.Headers.Get("Origin");
+            //        //if (!string.IsNullOrEmpty(origin))
+            //        //{
+            //        //    res.Headers.Set("Access-Control-Allow-Origin", origin);
+            //        //}
+            //        //if (req.Method == "OPTIONS")
+            //        //{
+            //        //    res.StatusCode = 200;
+            //        //    res.Headers.AppendCommaSeparatedValues("Access-Control-Allow-Methods", "GET", "POST");
+            //        //    res.Headers.AppendCommaSeparatedValues("Access-Control-Allow-Headers", "authorization", "content-type");
+            //        //    return;
+            //        //}
+
+            //        //var loginInfo = req.Headers["Email"];
+            //        //res.Cookies.Append("email", loginInfo);
+            //        //не возвращает никакие куки
+
+            //    }
+            //    await next();
+            //});
+
+        }
+
+
+        public void ConfigureOAuth(IAppBuilder app)
+        {
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -39,27 +77,7 @@ namespace FlatRent
                 AllowInsecureHttp = true
             };
 
-            // Включение использования приложением маркера-носителя для аутентификации пользователей
             app.UseOAuthBearerTokens(OAuthOptions);
-
-            // Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
-
-            //app.UseTwitterAuthentication(
-            //    consumerKey: "",
-            //    consumerSecret: "");
-
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
-
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
         }
     }
 }

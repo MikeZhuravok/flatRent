@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Core.Objects;
 
 namespace FlatRent.Entities
 {
@@ -23,6 +24,7 @@ namespace FlatRent.Entities
 
         public int OwnerId { set; get; }
 
+        //[ObjectContextOptions.LazyLoadingEnabled = false]
         public virtual List<Picture> Pictures { set; get; }
         public virtual List<FacilityInFlat> Facilities { set; get; }
         public virtual ApplicationUser ApplicationUser { set; get; }

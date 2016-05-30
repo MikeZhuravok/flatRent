@@ -86,11 +86,6 @@ namespace FlatRent.Migrations
             new FacilityInFlat() { FlatId = 1, FacilityId = 3 },
             new FacilityInFlat() { FlatId = 1, FacilityId = 4 },
             new FacilityInFlat() { FlatId = 1, FacilityId = 5 });
-            //new FacilityInFlat() { FlatId = 1, FacilityId = context.Facilities.FirstOrDefault(p => p.Type == "WiFi").ID },
-            //new FacilityInFlat() { FlatId = 1, FacilityId = context.Facilities.FirstOrDefault(p => p.Type == "Linens").ID },
-            //new FacilityInFlat() { FlatId = 1, FacilityId = context.Facilities.FirstOrDefault(p => p.Type == "Hairdryer").ID },
-            //new FacilityInFlat() { FlatId = 1, FacilityId = context.Facilities.FirstOrDefault(p => p.Type == "TV").ID },
-            //new FacilityInFlat() { FlatId = 1, FacilityId = context.Facilities.FirstOrDefault(p => p.Type == "Kitchen").ID });
         }
     }
 }
