@@ -72,6 +72,10 @@ namespace FlatRent.Web.Controllers
 
         public ActionResult Create()
         {
+            if (HttpContext.Request.Cookies["token"] == null)
+            {
+                return View("NoSuchRules"); 
+            }
             return View();
         }
 

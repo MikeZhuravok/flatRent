@@ -234,6 +234,7 @@
     <Content Include="Views\Flats\Details.cshtml" />
     <Content Include="Views\Flats\Edit.cshtml" />
     <Content Include="Views\Flats\Index.cshtml" />
+    <Content Include="Views\Shared\NoSuchRules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

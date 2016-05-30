@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FlatRent.Web.Controllers
@@ -12,7 +11,8 @@ namespace FlatRent.Web.Controllers
     public class HomeController : Controller
     {
         public async System.Threading.Tasks.Task<ActionResult> Index()
-        {
+        {          
+
             IEnumerable<Flat> model;
             using (var client = new HttpClient())
             {
@@ -58,4 +58,4 @@ namespace FlatRent.Web.Controllers
             return View(model);
         }
     }
-    }
+}
