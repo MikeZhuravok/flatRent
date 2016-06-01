@@ -10,6 +10,7 @@ using FlatRent.Entities;
 using System.Net.Http;
 using FlatRent.Web.App_Start;
 using FlatRent.Web.Models.ViewModels;
+using FlatRent.Web.Concrete;
 
 namespace FlatRent.Web.Controllers
 {
@@ -31,6 +32,7 @@ namespace FlatRent.Web.Controllers
             }
             return View(model);
         }
+        
 
 
         public async System.Threading.Tasks.Task<ActionResult> Details(int? id)
@@ -40,17 +42,7 @@ namespace FlatRent.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             FlatDetailViewModel model = new FlatDetailViewModel();
-            Flat flat;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                flat = System.Web.Helpers.Json.Decode<Flat>(textResult);
-            }
+            Flat flat = await ApiContacter.GetFlat(id);
             List<Facility> facilities;
             using (var client = new HttpClient())
             {

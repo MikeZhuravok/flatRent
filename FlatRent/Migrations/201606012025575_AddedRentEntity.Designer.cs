@@ -7,13 +7,13 @@ namespace FlatRent.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UserUpgrade : IMigrationMetadata
+    public sealed partial class AddedRentEntity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UserUpgrade));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedRentEntity));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605301711579_UserUpgrade"; }
+            get { return "201606012025575_AddedRentEntity"; }
         }
         
         string IMigrationMetadata.Source

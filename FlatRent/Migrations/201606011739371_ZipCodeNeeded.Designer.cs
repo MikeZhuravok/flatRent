@@ -7,13 +7,13 @@ namespace FlatRent.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class ZipCodeNeeded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ZipCodeNeeded));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605291607023_Initial"; }
+            get { return "201606011739371_ZipCodeNeeded"; }
         }
         
         string IMigrationMetadata.Source

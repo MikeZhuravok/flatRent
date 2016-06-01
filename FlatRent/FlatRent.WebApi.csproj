@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Geocoding, Version=3.4.0.0, Culture=neutral, PublicKeyToken=7c714700b88674c7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geocoding.net.3.4.0\lib\net40\Geocoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -218,23 +222,25 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Concrete\GoogleGeocoding.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FacilitiesController.cs" />
     <Compile Include="Controllers\FacilityInFlatsController.cs" />
     <Compile Include="Controllers\FlatsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\RentsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605291607023_Initial.cs" />
-    <Compile Include="Migrations\201605291607023_Initial.Designer.cs">
-      <DependentUpon>201605291607023_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201606011739371_ZipCodeNeeded.cs" />
+    <Compile Include="Migrations\201606011739371_ZipCodeNeeded.Designer.cs">
+      <DependentUpon>201606011739371_ZipCodeNeeded.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605301711579_UserUpgrade.cs" />
-    <Compile Include="Migrations\201605301711579_UserUpgrade.Designer.cs">
-      <DependentUpon>201605301711579_UserUpgrade.cs</DependentUpon>
+    <Compile Include="Migrations\201606012025575_AddedRentEntity.cs" />
+    <Compile Include="Migrations\201606012025575_AddedRentEntity.Designer.cs">
+      <DependentUpon>201606012025575_AddedRentEntity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AcconuViewModels.cs" />
@@ -319,11 +325,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605291607023_Initial.resx">
-      <DependentUpon>201605291607023_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606011739371_ZipCodeNeeded.resx">
+      <DependentUpon>201606011739371_ZipCodeNeeded.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605301711579_UserUpgrade.resx">
-      <DependentUpon>201605301711579_UserUpgrade.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606012025575_AddedRentEntity.resx">
+      <DependentUpon>201606012025575_AddedRentEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

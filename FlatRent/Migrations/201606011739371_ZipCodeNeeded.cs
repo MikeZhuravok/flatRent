@@ -3,7 +3,7 @@ namespace FlatRent.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class ZipCodeNeeded : DbMigration
     {
         public override void Up()
         {
@@ -46,7 +46,8 @@ namespace FlatRent.Migrations
                         PriceForMonth = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Latitude = c.Double(nullable: false),
                         Longitude = c.Double(nullable: false),
-                        OwnerId = c.Int(nullable: false),
+                        ZipCode = c.Int(nullable: false),
+                        OwnerId = c.String(),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
@@ -58,6 +59,8 @@ namespace FlatRent.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        FirstName = c.String(),
+                        LastName = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

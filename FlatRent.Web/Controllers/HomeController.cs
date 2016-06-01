@@ -1,5 +1,6 @@
 ﻿using FlatRent.Entities;
 using FlatRent.Web.App_Start;
+using FlatRent.Web.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,9 @@ namespace FlatRent.Web.Controllers
     public class HomeController : Controller
     {
         public async System.Threading.Tasks.Task<ActionResult> Index()
-        {          
+        {
 
-            IEnumerable<Flat> model;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats");
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                model = System.Web.Helpers.Json.Decode<IEnumerable<Flat>>(textResult);
-            }
+            IEnumerable<Flat> model = await ApiContacter.GetFlats();
             return View(model);
         }
 
@@ -40,22 +31,6 @@ namespace FlatRent.Web.Controllers
 
             return View();
         }
-
-        public async System.Threading.Tasks.Task<ActionResult> GetPictures()
-        {
-            ViewBag.Message = "Get pictures from DB.";
-            IEnumerable<Picture> model;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Pictures/");
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                model = System.Web.Helpers.Json.Decode<IEnumerable<Picture>>(textResult);
-            }
-            return View(model);
-        }
+        
     }
 }

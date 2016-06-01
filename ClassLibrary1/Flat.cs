@@ -18,11 +18,11 @@ namespace FlatRent.Entities
         [Display(Name = "Price for day")]
         public decimal PriceForDay { set; get; }
         [Display(Name = "Price for month")]
-        public decimal PriceForMonth { set; get; }                
+        public decimal PriceForMonth { set; get; }
         public double Latitude { set; get; } //широта
         public double Longitude { set; get; } //долгота
-
-        public int OwnerId { set; get; }
+        public int ZipCode { set; get; }
+        public string OwnerId { set; get; } // applicationUser id -> string
 
         //[ObjectContextOptions.LazyLoadingEnabled = false]
         public virtual List<Picture> Pictures { set; get; }

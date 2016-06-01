@@ -6,6 +6,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FlatRent.Entities;
 using FlatRent.Models;
+using FlatRent.Concrete;
+using Geocoding;
+using Geocoding.Google;
+using System.Collections.Generic;
+using System.Web.Http.Results;
+using FlatRent.App_Start;
 
 namespace FlatRent.Controllers
 { 
@@ -37,15 +43,25 @@ namespace FlatRent.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutFlat(int id, Flat flat)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if ((flat.PriceForDay == default(decimal) || flat.PriceForMonth == default(decimal)) && flat.RoomNumber == default(int)
+            //    && flat.Address == null && flat.City == null && flat.Country == null)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            if (id != flat.ID)
-            {
-                return BadRequest();
-            }
+            //if (id != flat.ID)
+            //{
+            //    return BadRequest();
+            //}
+
+            //double lat = 0;
+            //double lng = 0;
+            //GoogleGeocoding.FromAddressToCoordinates(flat.Address, out lat, out lng);
+            IGeocoder geocoder = new GoogleGeocoder() { ApiKey = "AIzaSyBPv28nNFi9vaIE74qhSfqdUhbGDqj0vyY" };
+            IEnumerable<Address> addresses = geocoder.Geocode(flat.Address, flat.City, flat.District, flat.ZipCode.ToString(), flat.Country);
+
+            flat.Latitude = addresses.First().Coordinates.Latitude;
+            flat.Longitude = addresses.First().Coordinates.Longitude;
 
             db.Entry(flat).State = EntityState.Modified;
 
@@ -55,32 +71,37 @@ namespace FlatRent.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FlatExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                //if (!FlatExists(id))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
+                //    throw;
+                //}
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Redirect(StaticData.WebClientLink);
         }
 
         // POST: api/Flats
-        [ResponseType(typeof(Flat))]
+        [ResponseType(typeof(RedirectResult))]
         public IHttpActionResult PostFlat(Flat flat)
         {
-            if (!ModelState.IsValid)
+            if ((flat.PriceForDay == default(decimal) || flat.PriceForMonth == default(decimal)) && flat.RoomNumber == default(int)
+                && flat.Address == null && flat.City == null && flat.Country == null)
             {
                 return BadRequest(ModelState);
             }
+            IGeocoder geocoder = new GoogleGeocoder() { ApiKey = "AIzaSyBPv28nNFi9vaIE74qhSfqdUhbGDqj0vyY" };
+            IEnumerable<Address> addresses = geocoder.Geocode(flat.Address, flat.City, flat.District, flat.ZipCode.ToString(), flat.Country);
+            flat.Latitude = addresses.First().Coordinates.Latitude;
+            flat.Longitude = addresses.First().Coordinates.Longitude;
 
             db.Flats.Add(flat);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = flat.ID }, flat);
+            return Redirect(StaticData.WebClientLink);
         }
 
         // DELETE: api/Flats/5

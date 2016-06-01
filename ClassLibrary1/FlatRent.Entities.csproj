@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rent.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Facility.cs" />
     <Compile Include="FacilityInFlat.cs" />

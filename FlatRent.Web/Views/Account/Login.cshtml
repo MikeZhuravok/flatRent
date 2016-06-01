@@ -35,6 +35,8 @@
 
                 var date = new Date(new Date().getTime() + 24 *  60 * 60 * 1000);
                 document.cookie = "token=" + data.access_token + "; path=/; expires=" + date.toUTCString();
+                var date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+                document.cookie = "userEmail=" + data.userName + "; path=/; expires=" + date.toUTCString();
                 window.location.replace("http://localhost:57433/");
 
             }).fail(function (data) {

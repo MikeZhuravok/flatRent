@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Details";
 }
-
 <h2>Details</h2>
 
 <div>
@@ -82,7 +81,12 @@
         <dd>
             @Html.DisplayFor(model => model.Flat.PriceForMonth)
         </dd>
-
+        <dt>
+            Map
+        </dt>
+        <dd>
+            @Html.ActionLink("Show via GoogleMaps", "ShowMap", "Map", new { id = Model.Flat.ID}, new { })
+        </dd>
     </dl>
 </div>
 <p>

@@ -9,42 +9,32 @@ using System.Web.Mvc;
 using FlatRent.Entities;
 using FlatRent.Web.App_Start;
 using System.Net.Http;
+using FlatRent.Web.Concrete;
 
 namespace FlatRent.Web.Controllers
 {
     public class PicturesController : Controller
     {
 
-        // GET: Pictures
         public async System.Threading.Tasks.Task<ActionResult> Index()
         {
-            IEnumerable<Picture> model;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Pictures");
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                model = System.Web.Helpers.Json.Decode<IEnumerable<Picture>>(textResult);
-            }
+            ViewBag.Message = "Get pictures from DB.";
+            IEnumerable<Picture> model = await ApiContacter.GetPictures();
             return View(model);
         }
 
-        // GET: Pictures/Create
         public ActionResult Create()
         {
             return View();
         }
-        
+
         //public ActionResult Delete(int? id)
         //{
         //    if (id == null)
         //    {
         //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }           
+        //    }
         //}
-            
+
     }
 }
