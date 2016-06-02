@@ -68,14 +68,12 @@
                     url: 'http://localhost:57401/api/Account/Register',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(data)
+                }).success(function (data) {
+                    window.location.replace("http://localhost:57433/");
+                }).fail(function (data) {
+                    window.location.replace("http://localhost:57433/");
                 });
-                
-                success(function (data) {
-                window.location.replace("http://localhost:57433/");
-            }).fail(function (data) {
-                window.location.replace("http://localhost:57433/");
             });
-        });
         })
     </script>
 }

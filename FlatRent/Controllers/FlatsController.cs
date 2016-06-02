@@ -12,6 +12,7 @@ using Geocoding.Google;
 using System.Collections.Generic;
 using System.Web.Http.Results;
 using FlatRent.App_Start;
+using System.Collections;
 
 namespace FlatRent.Controllers
 { 
@@ -86,8 +87,9 @@ namespace FlatRent.Controllers
 
         // POST: api/Flats
         [ResponseType(typeof(RedirectResult))]
-        public IHttpActionResult PostFlat(Flat flat)
+        public IHttpActionResult PostFlat(ComplexFlat comFlat)
         {
+            Flat flat = comFlat.Flat;
             if ((flat.PriceForDay == default(decimal) || flat.PriceForMonth == default(decimal)) && flat.RoomNumber == default(int)
                 && flat.Address == null && flat.City == null && flat.Country == null)
             {
@@ -97,6 +99,8 @@ namespace FlatRent.Controllers
             IEnumerable<Address> addresses = geocoder.Geocode(flat.Address, flat.City, flat.District, flat.ZipCode.ToString(), flat.Country);
             flat.Latitude = addresses.First().Coordinates.Latitude;
             flat.Longitude = addresses.First().Coordinates.Longitude;
+
+            IEnumerable selectedFacilities = comFlat.FacilitiesSelection.SelectedValues;
 
             db.Flats.Add(flat);
             db.SaveChanges();

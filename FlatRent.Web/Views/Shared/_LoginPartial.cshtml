@@ -1,31 +1,30 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.Cookies["Token"] != null)
+﻿@if (Request.Cookies["Token"] != null)
 {
-   
+
     <ul class="nav navbar-nav navbar-right">
         <li>
-            "Здравствуйте, " + Request.Cookies["userEmail"] + "!"
+            <p class="navbar-text navbar-right">@String.Format("Hello, " + Request.Cookies["userEmail"].Value + "!")</p>
         </li>
-        <li><a id="logOut">Выйти</a></li>
+        <li>
+            <button type="button" class="btn btn-default navbar-btn" id="logOut">Log Out</button>
+        </li>
     </ul>
+    <script type="text/javascript">
+        logOut.onclick = function (e) {
+            e.preventDefault();
+            var date = new Date(new Date().getTime() - 1);
+            document.cookie = "token= null" + "; path=/; expires=" + date.toUTCString();
+            date = new Date(new Date().getTime() - 1);
+            document.cookie = "userEmail= null" + "; path=/; expires=" + date.toUTCString();
+
+            location.reload();
+        };
+    </script>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
-}
-@section scripts{
-    <script type="text/javascript">
-    
-        $('#logOut').click(function (e) {
-            e.preventDefault();
-            var date = new Date(new Date().getTime() -1);
-            document.cookie = "token= null" + "; path=/; expires=" + date.toUTCString();
-            var date = new Date(new Date().getTime() -1);
-            document.cookie = "userEmail= null" + data.userName + "; path=/; expires=" + date.toUTCString();
-        });
-    })
-    </script>
-}
+}  

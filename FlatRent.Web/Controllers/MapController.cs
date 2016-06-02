@@ -17,10 +17,12 @@ namespace FlatRent.Web.Controllers
             Flat flat = await ApiContacter.GetFlat(id);
             MapViewModel model = new MapViewModel()
             {
-                Latitude = flat.Latitude,
-                Longitude = flat.Longitude,
-                Url = Url.Action("Details", "Flats"),
-                Address = flat.Address
+                Latitude = flat.Latitude.ToString(),
+                Longitude = flat.Longitude.ToString(),
+                //Url = Url.Action("Details", "Flats"),
+                Address = flat.Address,
+                PriceForDay = flat.PriceForDay,
+                PriceForMonth  = flat.PriceForMonth
             };
             return View(model);
         }

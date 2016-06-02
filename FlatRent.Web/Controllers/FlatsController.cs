@@ -11,6 +11,7 @@ using System.Net.Http;
 using FlatRent.Web.App_Start;
 using FlatRent.Web.Models.ViewModels;
 using FlatRent.Web.Concrete;
+using Microsoft.VisualBasic;
 
 namespace FlatRent.Web.Controllers
 {
@@ -19,17 +20,7 @@ namespace FlatRent.Web.Controllers
 
         public async System.Threading.Tasks.Task<ActionResult> Index()
         {
-            IEnumerable<Flat> model;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats");
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                model = System.Web.Helpers.Json.Decode<IEnumerable<Flat>>(textResult);
-            }
+            IEnumerable<Flat> model = await ApiContacter.GetFlats();
             return View(model);
         }
         
@@ -43,17 +34,7 @@ namespace FlatRent.Web.Controllers
             }
             FlatDetailViewModel model = new FlatDetailViewModel();
             Flat flat = await ApiContacter.GetFlat(id);
-            List<Facility> facilities;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/FacilityInFlats/" + id);
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                facilities = System.Web.Helpers.Json.Decode<List<Facility>>(textResult);
-            }
+            IEnumerable<Facility> facilities = await ApiContacter.GetFacilitiesByFlat(id);
 
             model.Flat = flat;
             model.Facilities = facilities;
@@ -62,13 +43,16 @@ namespace FlatRent.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Create()
+        public async System.Threading.Tasks.Task<ActionResult> Create()
         {
             if (HttpContext.Request.Cookies["token"] == null)
             {
-                return View("NoSuchRules"); 
+                return View("NoSuchRules");
             }
-            return View();
+            ComplexFlat model = new ComplexFlat();
+            var facilities = await ApiContacter.GetFacilities();
+            model.FacilitiesSelection = new MultiSelectList(facilities.Select(i => i.Type).ToList());
+            return View(model);
         }
 
         public async System.Threading.Tasks.Task<ActionResult> Edit(int? id)
@@ -77,17 +61,7 @@ namespace FlatRent.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Flat flat;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                flat = System.Web.Helpers.Json.Decode<Flat>(textResult);
-            }
+            Flat flat = await ApiContacter.GetFlat(id);           
             if (flat == null)
             {
                 return HttpNotFound();
@@ -101,19 +75,25 @@ namespace FlatRent.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Flat flat; 
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Flats/" + id);
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                flat = System.Web.Helpers.Json.Decode<Flat>(textResult);
-            }
+            Flat flat = await ApiContacter.GetFlat(id);
             return View(flat);
         }
 
+        public async System.Threading.Tasks.Task<ActionResult> RentAFlat(int? id)
+        {
+            Flat flat = await ApiContacter.GetFlat(id);
+            return View(new Rent() { FlatId = flat.ID });
+        }
+
+        [HttpPost]
+        public async System.Threading.Tasks.Task<ActionResult> RentAFlat(Rent rent)
+        {
+            Flat flat = await ApiContacter.GetFlat(rent.FlatId);
+            DateInterval interval = DateInterval.Day;
+            long difference = DateAndTime.DateDiff(interval, rent.StartOfRent, rent.EndOfRent, FirstDayOfWeek.Monday);  
+            decimal price = difference > 30 == true ? flat.PriceForMonth / 30 * difference : flat.PriceForDay* difference;
+            ViewBag.Price = price;
+            return View("Confirmation", rent);
+        }
     }
 }

@@ -85,11 +85,12 @@
             Map
         </dt>
         <dd>
-            @Html.ActionLink("Show via GoogleMaps", "ShowMap", "Map", new { id = Model.Flat.ID}, new { })
+            @Html.ActionLink("Show via GoogleMaps", "ShowMap", "Map", new { id = Model.Flat.ID }, new { })
         </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Flat.ID }) |
+    @Html.ActionLink("Rent", "RentAFlat", new { id = Model.Flat.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

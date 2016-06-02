@@ -13,8 +13,6 @@
 @section scripts{
     <script type="text/javascript">
     $(function () {
-        //...........................
-
         var tokenKey = "tokenInfo";
         $('#submitLogin').click(function (e) {
             e.preventDefault();
@@ -44,10 +42,6 @@
             });
         });
 
-        $('#logOut').click(function (e) {
-            e.preventDefault();
-            sessionStorage.removeItem(tokenKey);           
-        });
     })
     </script>
 }

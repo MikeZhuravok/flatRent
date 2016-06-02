@@ -1,0 +1,53 @@
+﻿@model FlatRent.Entities.Rent
+
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+<h2>Are you sure to rent next flat?</h2>
+
+<form method="post" action="http://localhost:57401/api/Rents/" role="form" class="form-horizontal">
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Rent</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.FlatId)
+        <div class="form-group">
+            <div class="col-md-10">
+                Flat : @Html.ActionLink("Details", "Details", new { id = Model.FlatId })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartOfRent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.StartOfRent, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndOfRent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.EndOfRent, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Price for current period")
+            <div class="col-md-10">
+                @ViewBag.Price
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default glyphicon glyphicon-ok" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

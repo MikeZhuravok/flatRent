@@ -71,7 +71,7 @@ namespace FlatRent.Migrations
 
                 Description = "Little flat for families with minimum count of facilities, but is near to the center of tourism",
 
-                Address = "Deribasivs'ka, 7",
+                Address = "Deribasivska street, 7",
 
                 Country = "Ukraine",
 
@@ -87,7 +87,11 @@ namespace FlatRent.Migrations
 
                 ZipCode = 65026,
 
-                OwnerId = user.Id
+                OwnerId = user.Id,
+
+                Latitude = 46.483872,
+
+                Longitude = 30.742178
 
             },
              new Flat()
@@ -114,7 +118,11 @@ namespace FlatRent.Migrations
 
                  ZipCode = 61170,
 
-                 OwnerId = user.Id
+                 OwnerId = user.Id,
+
+                 Latitude = 50.013637,
+
+                 Longitude = 36.326891
 
              },
               new Flat()
@@ -125,7 +133,7 @@ namespace FlatRent.Migrations
 
                   Description = "Big flat for families with childrens, is near to the undeground, quiet and pleasure",
 
-                  Address = "Akademika Pavlova street, 132B",
+                  Address = "Akademika Pavlova street, 134/16",
 
                   Country = "Ukraine",
 
@@ -139,7 +147,11 @@ namespace FlatRent.Migrations
 
                   PriceForMonth = 18000,
 
-                  OwnerId = user.Id
+                  OwnerId = user.Id,
+
+                  Latitude = 50.015674,
+
+                  Longitude = 36.329343
 
               }
 

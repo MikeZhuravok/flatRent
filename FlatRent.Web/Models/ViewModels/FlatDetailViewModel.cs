@@ -9,6 +9,6 @@ namespace FlatRent.Web.Models.ViewModels
     public class FlatDetailViewModel
     {
         public Flat Flat { set; get; }
-        public List<Facility> Facilities { set; get; }
+        public IEnumerable<Facility> Facilities { set; get; }
     }
 }

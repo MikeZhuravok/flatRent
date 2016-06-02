@@ -18,6 +18,7 @@
             <p>@i.Description</p>
             <p>
                 @Html.ActionLink("Details", "Details", "Flats", new { id = i.ID }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Rent", "RentAFlat", "Flats", new { id = i.ID }, new { @class = "btn btn-default" } ) 
             </p>
         </div>
     }
