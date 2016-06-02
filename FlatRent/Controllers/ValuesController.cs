@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlatRent.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,26 +11,11 @@ namespace FlatRent.Controllers
     [Authorize]
     public class ValuesController : ApiController
     {
-        public IEnumerable<string> Get()
+        ApplicationDbContext db = new ApplicationDbContext();
+        public string Get(string userEmail)
         {
-            return new string[] { "value1", "value2" };
-        }
-        
-        public string Get(int id)
-        {
-            return "value";
-        }
-        
-        public void Post([FromBody]string value)
-        {
-        }
-        
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        public void Delete(int id)
-        {
+            string phone = db.Users.FirstOrDefault(i => i.Email == userEmail).PhoneNumber;
+            return phone;
         }
     }
 }

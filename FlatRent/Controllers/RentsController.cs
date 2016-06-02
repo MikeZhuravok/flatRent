@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FlatRent.Entities;
 using FlatRent.Models;
+using System.Net.Http.Headers;
+using FlatRent.App_Start;
 
 namespace FlatRent.Controllers
 {
@@ -30,7 +32,7 @@ namespace FlatRent.Controllers
             {
                 return NotFound();
             }
-            IEnumerable<Rent> rents = db.Rents.Where(p => p.RentingUser.Id == user.Id).ToList();
+            IEnumerable<Rent> rents = db.Rents.Where(p => p.RentingUserId == user.Id).ToList();
             if (rents == null)
             {
                 return NotFound();
@@ -71,11 +73,9 @@ namespace FlatRent.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Redirect(StaticData.WebClientLink + "Rents");
         }
 
-        // POST: api/Rents
-        [ResponseType(typeof(Rent))]
         public IHttpActionResult PostRent(Rent rent)
         {
             if (!ModelState.IsValid)
@@ -83,13 +83,25 @@ namespace FlatRent.Controllers
                 return BadRequest(ModelState);
             }
 
+            
+
+            CookieHeaderValue cookie = Request.Headers.GetCookies("userEmail").FirstOrDefault();
+            if (cookie == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            string userEmail = cookie["userEmail"].Value;
+
+            ApplicationUser user = db.Users.FirstOrDefault(p => p.Email == userEmail);
+            rent.RentingUserId = user.Id;
+
             db.Rents.Add(rent);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = rent.ID }, rent);
+            return Redirect(StaticData.WebClientLink + "Flats/Details/" + rent.FlatId);
         }
 
-        // DELETE: api/Rents/5
         [ResponseType(typeof(Rent))]
         public IHttpActionResult DeleteRent(int id)
         {
@@ -102,7 +114,7 @@ namespace FlatRent.Controllers
             db.Rents.Remove(rent);
             db.SaveChanges();
 
-            return Ok(rent);
+            return Redirect(StaticData.WebClientLink + "Rents");
         }
 
         protected override void Dispose(bool disposing)

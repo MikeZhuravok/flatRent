@@ -23,7 +23,7 @@ namespace FlatRent.Web.Controllers
             IEnumerable<Flat> model = await ApiContacter.GetFlats();
             return View(model);
         }
-        
+
 
 
         public async System.Threading.Tasks.Task<ActionResult> Details(int? id)
@@ -39,7 +39,10 @@ namespace FlatRent.Web.Controllers
             model.Flat = flat;
             model.Facilities = facilities;
 
-
+            IEnumerable<Rent> rents = await ApiContacter.GetRents();
+            var currentRent = rents.Where(i => i.FlatId == id && i.StartOfRent < DateTime.Now && i.EndOfRent > DateTime.Now)
+                .FirstOrDefault();
+            ViewBag.curRent = currentRent;
             return View(model);
         }
 
@@ -61,7 +64,7 @@ namespace FlatRent.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Flat flat = await ApiContacter.GetFlat(id);           
+            Flat flat = await ApiContacter.GetFlat(id);
             if (flat == null)
             {
                 return HttpNotFound();
@@ -81,6 +84,17 @@ namespace FlatRent.Web.Controllers
 
         public async System.Threading.Tasks.Task<ActionResult> RentAFlat(int? id)
         {
+            if (HttpContext.Request.Cookies["userEmail"] == null)
+            {
+                return View("NoSuchRules");
+            }
+            IEnumerable<Rent> rents = await ApiContacter.GetRents();
+            var currentRent = rents.Where(i => i.FlatId == id && i.StartOfRent < DateTime.Now && i.EndOfRent > DateTime.Now)
+                .FirstOrDefault();
+            if (currentRent != null)
+            {
+                return View("CantRent");
+            }
             Flat flat = await ApiContacter.GetFlat(id);
             return View(new Rent() { FlatId = flat.ID });
         }
@@ -90,8 +104,8 @@ namespace FlatRent.Web.Controllers
         {
             Flat flat = await ApiContacter.GetFlat(rent.FlatId);
             DateInterval interval = DateInterval.Day;
-            long difference = DateAndTime.DateDiff(interval, rent.StartOfRent, rent.EndOfRent, FirstDayOfWeek.Monday);  
-            decimal price = difference > 30 == true ? flat.PriceForMonth / 30 * difference : flat.PriceForDay* difference;
+            long difference = DateAndTime.DateDiff(interval, rent.StartOfRent, rent.EndOfRent, FirstDayOfWeek.Monday);
+            decimal price = difference > 30 == true ? flat.PriceForMonth / 30 * difference : flat.PriceForDay * difference;
             ViewBag.Price = price;
             return View("Confirmation", rent);
         }

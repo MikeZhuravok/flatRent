@@ -10,7 +10,7 @@ namespace FlatRent.Entities
 {
     public class Rent : Entity
     {
-        public ApplicationUser RentingUser { set; get; }
+        public string RentingUserId { set; get; }
         public int FlatId { set; get; }
         [DataType(DataType.Date)]     
         public DateTime StartOfRent { set; get; }

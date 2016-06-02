@@ -9,6 +9,11 @@
     <h4>Flat</h4>
     <hr />
     <dl class="dl-horizontal">
+        @if (ViewBag.curRent != default(FlatRent.Entities.Rent))
+        {
+           <p>Now you can't rent this flat.</p> 
+        }
+
         <dt>
             @Html.DisplayNameFor(model => model.Flat.RoomNumber)
         </dt>
@@ -91,6 +96,9 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Flat.ID }) |
-    @Html.ActionLink("Rent", "RentAFlat", new { id = Model.Flat.ID }) |
+    @if (ViewBag.curRent == default(FlatRent.Entities.Rent))
+    {
+    @Html.ActionLink("Rent |", "RentAFlat", new { id = Model.Flat.ID })
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

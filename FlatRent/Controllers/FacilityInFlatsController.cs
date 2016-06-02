@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FlatRent.Entities;
 using FlatRent.Models;
+using FlatRent.App_Start;
 
 namespace FlatRent.Controllers
 {
@@ -68,7 +69,7 @@ namespace FlatRent.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Redirect(App_Start.StaticData.WebClientLink + "Flats");
         }
 
         // POST: api/FacilityInFlats
@@ -83,7 +84,7 @@ namespace FlatRent.Controllers
             db.FacilityInFlats.Add(facilityInFlat);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = facilityInFlat.ID }, facilityInFlat);
+            return Redirect(StaticData.WebClientLink + "Flats");
         }
 
         // DELETE: api/FacilityInFlats/5
@@ -99,7 +100,7 @@ namespace FlatRent.Controllers
             db.FacilityInFlats.Remove(facilityInFlat);
             db.SaveChanges();
 
-            return Ok(facilityInFlat);
+            return Redirect(StaticData.WebClientLink + "Flats");
         }
 
         protected override void Dispose(bool disposing)

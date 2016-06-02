@@ -43,21 +43,7 @@ namespace FlatRent.Controllers
         // PUT: api/Flats/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutFlat(int id, Flat flat)
-        {
-            //if ((flat.PriceForDay == default(decimal) || flat.PriceForMonth == default(decimal)) && flat.RoomNumber == default(int)
-            //    && flat.Address == null && flat.City == null && flat.Country == null)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            //if (id != flat.ID)
-            //{
-            //    return BadRequest();
-            //}
-
-            //double lat = 0;
-            //double lng = 0;
-            //GoogleGeocoding.FromAddressToCoordinates(flat.Address, out lat, out lng);
+        {            
             IGeocoder geocoder = new GoogleGeocoder() { ApiKey = "AIzaSyBPv28nNFi9vaIE74qhSfqdUhbGDqj0vyY" };
             IEnumerable<Address> addresses = geocoder.Geocode(flat.Address, flat.City, flat.District, flat.ZipCode.ToString(), flat.Country);
 
@@ -82,7 +68,7 @@ namespace FlatRent.Controllers
                 //}
             }
 
-            return Redirect(StaticData.WebClientLink);
+            return Redirect(StaticData.WebClientLink + "Flats");
         }
 
         // POST: api/Flats
@@ -105,7 +91,7 @@ namespace FlatRent.Controllers
             db.Flats.Add(flat);
             db.SaveChanges();
 
-            return Redirect(StaticData.WebClientLink);
+            return Redirect(StaticData.WebClientLink + "Flats");
         }
 
         // DELETE: api/Flats/5

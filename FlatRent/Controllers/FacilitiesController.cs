@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FlatRent.Entities;
 using FlatRent.Models;
+using FlatRent.App_Start;
 
 namespace FlatRent.Controllers
 {
@@ -99,7 +100,7 @@ namespace FlatRent.Controllers
             db.Facilities.Remove(facility);
             db.SaveChanges();
 
-            return Ok(facility);
+            return Redirect(StaticData.WebClientLink + "Facilities");
         }
 
         protected override void Dispose(bool disposing)

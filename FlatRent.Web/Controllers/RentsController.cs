@@ -10,7 +10,6 @@ namespace FlatRent.Web.Controllers
 {
     public class RentsController : Controller
     {
-        // GET: Rents
         public async System.Threading.Tasks.Task<ActionResult> Index()
         {
             if (HttpContext.Request.Cookies["userEmail"] == null)
@@ -20,6 +19,6 @@ namespace FlatRent.Web.Controllers
             string userEmail = HttpContext.Request.Cookies["userEmail"].Value;
             IEnumerable<Rent> userRents = await ApiContacter.GetRentsByUserEmail(userEmail);
             return View(userRents);
-        }
+        } 
     }
 }

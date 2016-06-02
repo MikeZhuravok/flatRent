@@ -242,6 +242,10 @@
     <Compile Include="Migrations\201606012025575_AddedRentEntity.Designer.cs">
       <DependentUpon>201606012025575_AddedRentEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606021740150_CorrectUserId.cs" />
+    <Compile Include="Migrations\201606021740150_CorrectUserId.Designer.cs">
+      <DependentUpon>201606021740150_CorrectUserId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AcconuViewModels.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -330,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606012025575_AddedRentEntity.resx">
       <DependentUpon>201606012025575_AddedRentEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606021740150_CorrectUserId.resx">
+      <DependentUpon>201606021740150_CorrectUserId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

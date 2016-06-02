@@ -11,6 +11,8 @@ namespace FlatRent.Web.Concrete
 {
     public static class ApiContacter
     {
+
+
         // not nullable, in all cases check was already done
         public static async System.Threading.Tasks.Task<Flat> GetFlat(int? id)
         {
@@ -43,6 +45,23 @@ namespace FlatRent.Web.Concrete
             }
             return rents;
         }
+
+        internal static async Task<IEnumerable<Rent>> GetRents()
+        {
+            IEnumerable<Rent> rents;
+            using (var client = new HttpClient())
+            {
+                var uri = new Uri(StaticData.ApiLink + "api/Rents/");
+
+                var response = await client.GetAsync(uri);
+
+                string textResult = await response.Content.ReadAsStringAsync();
+
+                rents = System.Web.Helpers.Json.Decode<IEnumerable<Rent>>(textResult);
+            }
+            return rents;
+        }
+
 
         public static async System.Threading.Tasks.Task<IEnumerable<Flat>> GetFlats()
         {
@@ -94,23 +113,7 @@ namespace FlatRent.Web.Concrete
             }
             return model;
         }
-
-        public static async System.Threading.Tasks.Task<IEnumerable<Rent>> GetRents(string userEmail)
-        {
-            IEnumerable<Rent> model;
-            using (var client = new HttpClient())
-            {
-                var uri = new Uri(StaticData.ApiLink + "api/Rents/" + userEmail);
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                model = System.Web.Helpers.Json.Decode<IEnumerable<Rent>>(textResult);
-
-            }
-            return model;
-        }
+        
 
         public static async System.Threading.Tasks.Task<IEnumerable<Picture>> GetPictures()
         {
