@@ -54,7 +54,7 @@ namespace FlatRent.Web.Controllers
             }
             ComplexFlat model = new ComplexFlat();
             var facilities = await ApiContacter.GetFacilities();
-            model.FacilitiesSelection = new MultiSelectList(facilities.Select(i => i.Type).ToList());
+            model.FacilitiesSelection = new MultiSelectList(facilities, "ID", "Type");
             return View(model);
         }
 

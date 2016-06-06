@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FlatRent.Entities.ComplexFlat">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ComplexFlat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Models.ApplicationUser">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAEAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Entities.Entity">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Entities.Facility">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Facility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Entities.FacilityInFlat">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAIAAAAAEAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>FacilityInFlat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Entities.Flat">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAIAFAgAAAYAAAoIAAAAAIAQAADAAAAAAAAAAA=</HashCode>
+      <FileName>Flat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Entities.Picture">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAEAQAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Picture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlatRent.Entities.Rent">
+    <Position X="2.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAIAAAAAAAAAAAAEAAAAAIAAgAAAAAACAAAAAA=</HashCode>
+      <FileName>Rent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
